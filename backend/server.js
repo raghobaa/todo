@@ -29,48 +29,7 @@ mongoose.connect(process.env.MONGODB_URI)
     .catch((err) => console.error('❌ MongoDB connection error:', err));
 
 app.get('/', (req, res) => {
-    res.json({ message: 'ToDo Manager API is running' });
-});
-
-// 🔍 DEBUG: Database connection test route
-app.get('/api/db-test', async (req, res) => {
-    try {
-        const state = mongoose.connection.readyState;
-        const states = {
-            0: 'disconnected',
-            1: 'connected',
-            2: 'connecting',
-            3: 'disconnecting'
-        };
-
-        // If disconnected, try to reconnect to capture error
-        if (state === 0) {
-            try {
-                await mongoose.connect(process.env.MONGODB_URI);
-            } catch (connErr) {
-                return res.status(500).json({
-                    status: 'error',
-                    message: 'Failed to reconnect',
-                    error: connErr.message,
-                    state: states[mongoose.connection.readyState]
-                });
-            }
-        }
-
-        res.json({
-            status: 'success',
-            message: 'Database connection check',
-            state: states[mongoose.connection.readyState],
-            host: mongoose.connection.host,
-            dbName: mongoose.connection.name
-        });
-    } catch (error) {
-        res.status(500).json({
-            status: 'error',
-            message: 'Database check failed',
-            error: error.message
-        });
-    }
+    res.json({ message: 'ToDo Manager API is running (v1.1)' });
 });
 
 app.use('/api/auth', authRoutes);
