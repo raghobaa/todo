@@ -43,11 +43,26 @@ const Register = () => {
 
         try {
             const { confirmPassword, ...registerData } = formData;
+
+            // 🔍 DEBUG: Log API call details
+            console.log('🚀 [REGISTER] Attempting registration...');
+            console.log('📍 [REGISTER] API URL:', `${API_URL}/auth/register`);
+            console.log('📦 [REGISTER] Request data:', { ...registerData, password: '***' });
+
             const response = await axios.post(`${API_URL}/auth/register`, registerData);
+
+            console.log('✅ [REGISTER] Success! Response:', response.data);
+
             const { token, ...userData } = response.data;
             login(userData, token);
             navigate('/dashboard');
         } catch (err) {
+            // 🔍 DEBUG: Log error details
+            console.error('❌ [REGISTER] Error occurred:');
+            console.error('Status:', err.response?.status);
+            console.error('Message:', err.response?.data?.message);
+            console.error('Full error:', err);
+
             setError(err.response?.data?.message || 'Registration failed. Please try again.');
         } finally {
             setLoading(false);
