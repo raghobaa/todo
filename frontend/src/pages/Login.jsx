@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://todo-aisz.vercel.app/';
+const API_URL = import.meta.env.VITE_API_URL || 'https://todo-aisz.vercel.app/api';
 
 const Login = () => {
     const [formData, setFormData] = useState({
